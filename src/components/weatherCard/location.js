@@ -24,4 +24,4 @@ const Location = (props) => {
   );
 };
 
-export default Location;
+export default Location; 

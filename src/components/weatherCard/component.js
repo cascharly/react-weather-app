@@ -5,9 +5,13 @@ import Icon from "./icon";
 import Condition from "./condition";
 
 function WeatherCard(props) {
+  
+  let highColor = (1 - (props.temp - 12) / 28) * 255;
+  let lowColor = highColor - 150;
+
   const Card = styled.div`
     margin: 0 auto;
-    background: linear-gradient(to bottom, blue, lightblue);
+    background: linear-gradient(to top, rgb(255,${highColor},0), rgb(255,${lowColor},0));
     width: 200px;
     height: 240px;
     display: flex;

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 
-const Icon = () => {
+const Icon = (props) => {
   const Icon = styled.img`
     height: 80px;
   `;

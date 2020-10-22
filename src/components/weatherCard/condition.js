@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-const Condition = () => {
+const Condition = (props) => {
 
     const Temp = styled.h1`
     font-family: 'Fira Sans', sans-serif;
