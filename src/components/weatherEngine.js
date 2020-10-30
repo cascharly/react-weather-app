@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import WeatherCard from "./weatherCard/component";
 
-const WeatherEngine = ({location}) => {
-  
+const WeatherEngine = ({ location }) => {
   const [query, setQuery] = useState("");
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [weather, setWeather] = useState({
     temp: null,
     city: null,
@@ -12,16 +13,23 @@ const WeatherEngine = ({location}) => {
   });
 
   const getWeather = async (q) => {
-    const apiRes = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${q}&units=metric&APPID=fb1362db4fc9d77dbd51ebcca2fed300`
-    );
-    const resJSON = await apiRes.json();
-    setWeather({
-      temp: resJSON.main.temp,
-      city: resJSON.name,
-      condition: resJSON.weather[0].main,
-      country: resJSON.sys.country,
-    });
+    setQuery("");
+    setLoading(true);
+    try {
+      const apiRes = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${q}&units=metric&APPID=fb1362db4fc9d77dbd51ebcca2fed300`
+      );
+      const resJSON = await apiRes.json();
+      setWeather({
+        temp: resJSON.main.temp,
+        city: resJSON.name,
+        condition: resJSON.weather[0].main,
+        country: resJSON.sys.country,
+      });
+    } catch (error) {
+      setError(true);
+    }
+    setLoading(false);
   };
 
   const handleSearch = (e) => {
@@ -35,16 +43,28 @@ const WeatherEngine = ({location}) => {
 
   return (
     <div>
-      <WeatherCard
-        temp={weather.temp}
-        condition={weather.condition}
-        city={weather.city}
-        country={weather.country}
-      />
-      <form>
-        <input value={query} onChange={(e) => setQuery(e.target.value)} />
-        <button onClick={(e) => handleSearch(e)}>Search</button>
-      </form>
+      {!loading && !error ? (
+        <div>
+          <WeatherCard
+            temp={weather.temp}
+            condition={weather.condition}
+            city={weather.city}
+            country={weather.country}
+          />
+          <form>
+            <input value={query} onChange={(e) => setQuery(e.target.value)} />
+            <button onClick={(e) => handleSearch(e)}>Search</button>
+          </form>
+        </div>
+      ) : loading ? (
+        <div style={{ color: "black" }}>Loading</div>
+      ) : !loading && error ? (
+        <div style={{ color: "black" }}>
+          Error
+          <br />
+          <button onClick={() => setError(false)}>Reset</button>
+        </div>
+      ) : null}
     </div>
   );
 };
