@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { PulseLoader } from "react-spinners";
 import WeatherCard from "./weatherCard/component";
 
 const WeatherEngine = ({ location }) => {
@@ -55,7 +56,9 @@ const WeatherEngine = ({ location }) => {
           
         </div>
       ) : loading ? (
-        <div style={{ color: "black" }}>Loading</div>
+        <div style={{ display:'flex', width: '200px', height: '240px', justifyContent:'center', alignItems:'center'  }}>
+            <PulseLoader size={15} color='purple'/>
+        </div>
       ) : !loading && error ? (
         <div style={{ color: "black" }}>
           Error
