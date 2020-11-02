@@ -3,7 +3,6 @@ import { PulseLoader } from "react-spinners";
 import WeatherCard from "./weatherCard/component";
 
 const WeatherEngine = ({ location }) => {
-  const [query, setQuery] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [weather, setWeather] = useState({
@@ -14,7 +13,7 @@ const WeatherEngine = ({ location }) => {
   });
 
   const getWeather = async (q) => {
-    setQuery("");
+    console.log(q);
     setLoading(true);
     try {
       const apiRes = await fetch(
